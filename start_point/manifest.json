@@ -1,14 +1,15 @@
 {
   "display_name": "Kotlin, Kotlintest",
-  "image_name": "cyberdojofoundation/kotlin_test",
-  "visible_filenames":
-  [
+  "image_name": "cyberdojofoundation/kotlin_test:580dc73",
+  "visible_filenames": [
     "HikerTest.kt",
     "Hiker.kt",
     "cyber-dojo.sh",
     "hard-wired.txt"
   ],
-  "filename_extension": [ ".kt" ],
+  "filename_extension": [
+    ".kt"
+  ],
   "max_seconds": 20,
   "tab_size": 4
 }
