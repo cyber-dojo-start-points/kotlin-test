@@ -1,4 +1,4 @@
-// [X] See hard-wired.txt 
+// [X] See please-help.txt 
 
 package hiker /*[X]*/
 

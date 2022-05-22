@@ -1,11 +1,11 @@
 {
   "display_name": "Kotlin, Kotlintest",
-  "image_name": "cyberdojofoundation/kotlin_test:580dc73",
+  "image_name": "cyberdojofoundation/kotlin_test:857e4fa",
   "visible_filenames": [
     "HikerTest.kt",
     "Hiker.kt",
     "cyber-dojo.sh",
-    "hard-wired.txt"
+    "please-help.txt"
   ],
   "filename_extension": [
     ".kt"
