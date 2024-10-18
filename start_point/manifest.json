@@ -1,6 +1,6 @@
 {
-  "display_name": "Kotlin, Kotlintest",
-  "image_name": "cyberdojofoundation/kotlin_test:857e4fa",
+  "display_name": "Kotlin 2.0.21, Kotlintest 5.9.1",
+  "image_name": "ghcr.io/cyber-dojo-languages/kotlin_kotest:53adb24",
   "visible_filenames": [
     "HikerTest.kt",
     "Hiker.kt",

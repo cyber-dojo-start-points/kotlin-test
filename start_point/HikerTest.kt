@@ -2,11 +2,12 @@
 
 package hiker /*[X]*/
 
-import io.kotlintest.specs.StringSpec
-import io.kotlintest.shouldBe
-import io.kotlintest.shouldNotBe
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
-class HikerTest /*[X]*/ : StringSpec() {
+
+class HikerTest : StringSpec() { /*[X]*/
 
     init {
         "Example Test" {

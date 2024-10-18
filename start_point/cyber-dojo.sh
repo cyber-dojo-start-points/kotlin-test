@@ -5,7 +5,8 @@ CLASSES=`ls /kotlin/*.jar | tr '\n' ':'`${CLASSES}
 kotlinc *.kt -include-runtime -cp $CLASSES
 if [ $? -eq 0 ]; then
   java -cp $CLASSES \
-    io.kotlintest.runner.console.LauncherKt \
-    --writer basic \
-    --spec hiker.HikerTest  # [X]
+    io.kotest.engine.launcher.MainKt \
+    --spec hiker.HikerTest \
+    --termcolor true
+    # [X]
 fi
