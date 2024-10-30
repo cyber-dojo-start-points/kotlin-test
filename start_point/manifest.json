@@ -1,5 +1,5 @@
 {
-  "display_name": "Kotlin 2.0.21, Kotlintest 5.9.1",
+  "display_name": "Kotlin 2.0.21, Kotest 5.9.1",
   "image_name": "ghcr.io/cyber-dojo-languages/kotlin_kotest:53adb24",
   "visible_filenames": [
     "HikerTest.kt",
