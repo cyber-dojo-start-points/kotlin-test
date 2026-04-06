@@ -4,8 +4,7 @@
   "visible_filenames": [
     "HikerTest.kt",
     "Hiker.kt",
-    "cyber-dojo.sh",
-    "please-help.txt"
+    "cyber-dojo.sh"
   ],
   "rag_lambda": "red_amber_green.rb",
   "filename_extension": [
