@@ -1,12 +1,13 @@
 {
-  "display_name": "Kotlin 2.0.21, Kotest 5.9.1",
-  "image_name": "ghcr.io/cyber-dojo-languages/kotlin_kotest:37a0736",
+  "display_name": "Kotlin 2.3.20, Kotest 5.9.1",
+  "image_name": "ghcr.io/cyber-dojo-languages/kotlin_kotest:c11793c",
   "visible_filenames": [
     "HikerTest.kt",
     "Hiker.kt",
     "cyber-dojo.sh",
     "please-help.txt"
   ],
+  "rag_lambda": "red_amber_green.rb",
   "filename_extension": [
     ".kt"
   ],

@@ -12,12 +12,6 @@ is hard-wired in the cyber-dojo.sh file. If you change the
 test package name and/or the test class name you must update
 cyber-dojo.sh appropriately.
 
-Note that cyber-dojo.sh uses the option [--writer basic]
-which writes red/green terminal colour codes to the output.
-These don't render properly in a plain textarea and there appears
-to be no way to turn it off. Maybe you can help?
-If so please email feedback@cyber-dojo.org
-
 If you write more than one test with the same name kotlin-test
 appears to run no tests at all! Maybe you can help?
 If so please email feedback@cyber-dojo.org
