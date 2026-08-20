@@ -1,14 +1,14 @@
 {
-  "display_name": "Kotlin 2.3.20, Kotest 5.9.1",
+  "image_name": "ghcr.io/cyber-dojo-languages/kotlin_kotest:7d743bd",
+  "display_name": "Kotlin 2.4.10, Kotest 6.2.4",
   "language": [
     "Kotlin",
-    "2.3.20"
+    "2.4.10"
   ],
   "test_framework": [
     "Kotest",
-    "5.9.1"
+    "6.2.4"
   ],
-  "image_name": "ghcr.io/cyber-dojo-languages/kotlin_kotest:c11793c",
   "visible_filenames": [
     "HikerTest.kt",
     "Hiker.kt",
@@ -18,6 +18,6 @@
   "filename_extension": [
     ".kt"
   ],
-  "max_seconds": 20,
+  "max_seconds": 10,
   "tab_size": 4
 }
