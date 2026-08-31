@@ -7,7 +7,11 @@ LAUNCHER=`ls /kotlin/junit-platform-console-standalone-*.jar`
 # Every .kt file is compiled, including ones in sub-directories and ones
 # nothing else refers to yet, so a file you are midway through writing shows
 # its errors instead of being silently skipped.
-kotlinc `find . -name '*.kt'` -cp $CLASSES
+#
+# The compiler runs in a JVM of its own. A kata holds few enough files that the
+# JVM never runs long enough to profit from its optimising compiler, so it is
+# told to stop at the quick one, the same way the test JVM below is.
+JAVA_OPTS='-XX:TieredStopAtLevel=1' kotlinc `find . -name '*.kt'` -cp $CLASSES
 compiled=$?
 if [ $compiled -ne 0 ]; then
   exit $compiled
