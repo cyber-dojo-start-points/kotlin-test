@@ -11,9 +11,5 @@ class HikerTest : StringSpec() {
         "Example Test" {
             answer() shouldBe 42
         }
-
-        "Other example test" {
-            "a" shouldNotBe "b"
-        }
     }
 }
