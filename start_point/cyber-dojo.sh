@@ -4,23 +4,45 @@
 CLASSES=.:`ls /kotlin/*.jar | tr '\n' ':'`
 LAUNCHER=`ls /kotlin/junit-platform-console-standalone-*.jar`
 
-# Both JVMs below replay a class-data archive the image dumped at build time,
-# which is most of what they would otherwise spend their time doing: a fresh
-# container loads every class from the jars again. cds logging is off because a
-# JVM that cannot use an archive says so on stdout, and that belongs in a build
-# log rather than in front of whoever is doing the kata. Nothing is lost when an
-# archive cannot be used; the run is only slower.
-readonly CDS_COMPILER='-XX:SharedArchiveFile=/kotlin/kotlinc.jsa -Xlog:cds*=off'
-readonly CDS_TESTS='-XX:SharedArchiveFile=/kotlin/junit.jsa -Xlog:cds*=off'
+# The compiler is started directly rather than through the kotlinc script. That
+# script runs the compiler behind a Preloader, which loads it through a
+# classloader of its own, and an AOT cache recorded for that arrangement is
+# slower than no cache at all. Started this way the compiler's classes come off
+# the classpath, where the cache can reach them.
+COMPILER_JAR=/usr/share/kotlin/kotlinc/lib/kotlin-compiler.jar
+COMPILER_MAIN=org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
+
+# Both JVMs below read something the image recorded at build time instead of
+# doing the same work on every run. Nothing is lost when either is missing or
+# unusable: the JVM says so and does the work itself, and the run is slower.
+#
+# The collector is named rather than left to the JVM to choose. Replaying the
+# AOT cache under the one it picks by default kills the compiler outright with
+# SIGILL, five runs in six, and a compiler that dies before printing anything
+# leaves no summary line, so every kata scores amber whatever its tests did.
+# A JVM that lives for half a second has nothing to gain from a concurrent
+# collector in any case.
+COMPILER_OPTS=()
+COMPILER_OPTS+=(-XX:AOTCache=/kotlin/kotlinc.aot)          # the compiler's own classes, linked
+COMPILER_OPTS+=(-XX:+UseSerialGC)                          # see below; the default one crashes replaying the cache
+COMPILER_OPTS+=(-XX:TieredStopAtLevel=1)                   # still ahead even over a half-second compile
+COMPILER_OPTS+=(-Xlog:cds*=off)                            # a JVM that cannot use it says so on stdout
+COMPILER_OPTS+=(-Xlog:aot*=off)                            # as above, for the aot cache
+COMPILER_OPTS+=(--enable-native-access=ALL-UNNAMED)        # the kotlinc script passes this on jdk 24+
+COMPILER_OPTS+=(--sun-misc-unsafe-memory-access=allow)     # as above
+
+# The test JVM keeps its class-data archive. An AOT cache was measured here too
+# and came out level with it, so there is nothing to gain by changing it.
+TEST_OPTS=()
+TEST_OPTS+=(-XX:TieredStopAtLevel=1)
+TEST_OPTS+=(-XX:SharedArchiveFile=/kotlin/junit.jsa)
+TEST_OPTS+=(-Xlog:cds*=off)
 
 # Every .kt file is compiled, including ones in sub-directories and ones
 # nothing else refers to yet, so a file you are midway through writing shows
 # its errors instead of being silently skipped.
-#
-# The compiler runs in a JVM of its own. A kata holds few enough files that the
-# JVM never runs long enough to profit from its optimising compiler, so it is
-# told to stop at the quick one, the same way the test JVM below is.
-JAVA_OPTS="-XX:TieredStopAtLevel=1 ${CDS_COMPILER}" kotlinc `find . -name '*.kt'` -cp $CLASSES
+java "${COMPILER_OPTS[@]}" -cp "${COMPILER_JAR}" "${COMPILER_MAIN}" \
+  `find . -name '*.kt'` -cp $CLASSES -d .
 compiled=$?
 if [ $compiled -ne 0 ]; then
   exit $compiled
@@ -29,8 +51,7 @@ fi
 # By default you get a _large_ stack-trace when tests fail. Only the frames
 # naming the dojo package are kept, so the failing line in your own file
 # survives and the test engine's frames do not.
-java -XX:TieredStopAtLevel=1 \
-  ${CDS_TESTS} \
+java "${TEST_OPTS[@]}" \
   -jar $LAUNCHER \
   execute \
   --class-path $CLASSES \
